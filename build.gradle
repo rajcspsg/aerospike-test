@@ -1,0 +1,21 @@
+group 'aerospike-test'
+
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+
+subprojects {
+    apply plugin: 'java'
+    repositories {
+        mavenCentral()
+    }
+}
+
+project(':aerospike-benchmark-demo') {
+    dependencies {
+        compile project(':aerospike-demo')
+    }
+}

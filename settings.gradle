@@ -1,0 +1,5 @@
+rootProject.name = 'aerospike-test'
+rootProject.name = 'aerospike-test'
+include 'aerospike-demo'
+include 'aerospike-benchmark-demo'
+
