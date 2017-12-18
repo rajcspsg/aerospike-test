@@ -9,6 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -24,7 +25,10 @@ public class MySpringDataAerospikeDemo {
 
         repository.createIndex(User.class, "user_name_index_repository", "name", IndexType.STRING);
 
-        User dave = new User("Dave-01", new HashMap<>());
+        HashMap<String, String> daveMap = new HashMap<>();
+        daveMap.put(UUID.randomUUID().toString(), UUID.randomUUID().toString());
+
+        User dave = new User("Dave-01", daveMap);
         User donny = new User("Dave-02", new HashMap<>());
         User oliver = new User("Oliver-01", new HashMap<>());
         User carter = new User("Carter-01", new HashMap<>());
@@ -42,5 +46,22 @@ public class MySpringDataAerospikeDemo {
                 .collect(Collectors.toList());
 
         System.out.println(savedUsers);
+
+
+        //HashMap<String, String> daveMap = new HashMap<>();
+        daveMap.put(UUID.randomUUID().toString(), UUID.randomUUID().toString());
+        daveMap.put(UUID.randomUUID().toString(), UUID.randomUUID().toString());
+
+        User newDave = new User("Dave-01", daveMap);
+        repository.save(newDave);
+
+        User davenew = repository.findOne(dave.getId());
+        System.out.println("new dave is \n" + davenew);
+
+        User anotherDave = new User("Dave-01", new HashMap<>());
+        repository.save(anotherDave);
+
+        User daveanother = repository.findOne(dave.getId());
+        System.out.println("new dave is \n" + daveanother);
     }
 }

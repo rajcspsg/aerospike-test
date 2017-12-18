@@ -17,6 +17,10 @@ public class User implements Serializable{
         this.eUserIds = eUserIds;
     }
 
+    public void seteUserIds(HashMap<String, String> eUserIds) {
+        this.eUserIds = eUserIds;
+    }
+
     public String getId() {
         return id;
     }

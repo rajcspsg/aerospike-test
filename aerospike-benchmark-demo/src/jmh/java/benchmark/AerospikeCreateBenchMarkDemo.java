@@ -10,6 +10,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class AerospikeCreateBenchMarkDemo {
 
@@ -20,6 +21,8 @@ public class AerospikeCreateBenchMarkDemo {
         public int iterations;
 
         public List<User> persons = new ArrayList<>();
+
+        public List<HashMap<String,String>>  newMapList = new ArrayList<>();
 
         public UserRepository repository;
 
@@ -32,6 +35,7 @@ public class AerospikeCreateBenchMarkDemo {
 
             for(int i=0; i < iterations; i++) {
                 persons.add(generateUser());
+                newMapList.add(getExternalUserIds());
             }
         }
 
@@ -47,15 +51,49 @@ public class AerospikeCreateBenchMarkDemo {
             }
             return new User(id, eUserIds);
         }
+
+        private HashMap<String, String> getExternalUserIds() {
+            HashMap<String, String> eUserIds = new HashMap<>();
+
+            for (int i =0; i < 20; i++) {
+                String key = UUID.randomUUID().toString();
+                String value = UUID.randomUUID().toString();
+                eUserIds.put(key, value);
+            }
+            return eUserIds;
+        }
     }
 
-    @Fork(value = 1, warmups = 2)
     @Benchmark
+    @Fork(value = 1, warmups = 2)
     @BenchmarkMode({Mode.All})
     @Warmup(iterations = 5)
     public void createUser(AerospikeCreateBenchmarkPlan plan) {
         plan.persons.forEach(p -> plan.repository.save(p));
     }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 2)
+    @BenchmarkMode({Mode.All})
+    @Warmup(iterations = 5)
+    public void getUser(AerospikeCreateBenchmarkPlan plan) {
+        plan.persons.forEach(p -> plan.repository.findOne(p.getId()));
+    }
+
+    @Benchmark
+    @Fork(value = 1, warmups = 2)
+    @BenchmarkMode({Mode.All})
+    @Warmup(iterations = 5)
+    public void updateExternalIds(AerospikeCreateBenchmarkPlan plan) {
+        IntStream
+                .range(0, plan.persons.size()).forEach(i -> {
+                    User u = plan.persons.get(i);
+                    HashMap<String, String> externalIds = plan.newMapList.get(i);
+                    u.seteUserIds(externalIds);
+                    plan.repository.save(u);
+        });
+    }
+
 
     public static void main(String[] args) throws Exception {
         Options options = new OptionsBuilder()
