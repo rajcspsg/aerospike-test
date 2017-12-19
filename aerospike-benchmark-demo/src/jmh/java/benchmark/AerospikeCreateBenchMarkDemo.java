@@ -26,17 +26,18 @@ public class AerospikeCreateBenchMarkDemo {
 
         public UserRepository repository;
 
-        Random rand = new Random();
-
         @Setup(Level.Iteration)
-        public void setUp() {
-            ApplicationContext ctx = new AnnotationConfigApplicationContext(AerospikeConfig.class);
-            repository = ctx.getBean(UserRepository.class);
-
+        public void setUpdata() {
             for(int i=0; i < iterations; i++) {
                 persons.add(generateUser());
                 newMapList.add(getExternalUserIds());
             }
+        }
+
+        @Setup(Level.Trial)
+        public void setUpConfig() {
+            ApplicationContext ctx = new AnnotationConfigApplicationContext(AerospikeConfig.class);
+            repository = ctx.getBean(UserRepository.class);
         }
 
         private User generateUser() {

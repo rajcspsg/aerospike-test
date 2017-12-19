@@ -24,5 +24,5 @@ The Spring data version of aerospike to version is `com.demo.aerospike.MySpringD
 
 This project depends on aerospike-demo and benchmarks the CRUD operations on aerospike.
 
-Run this project using the command `gradle :aerospike-benchmark-demo:jmh --stacktrace` 
+Run this project using the command `gradle :aerospike-benchmark-demo:jmh` 
 

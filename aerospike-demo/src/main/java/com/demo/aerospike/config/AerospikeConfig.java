@@ -15,8 +15,8 @@ public class AerospikeConfig {
 
         ClientPolicy policy = new ClientPolicy();
         policy.failIfNotConnected = true;
-        String localhost = "172.28.128.3";
-        //String localhost = "localhost";
+        //String localhost = "172.28.128.3";
+        String localhost = "localhost";
 
         return new AerospikeClient(policy, localhost, 3000);
     }
