@@ -1,6 +1,4 @@
 
-<b>Aerosike samples</b>
-
 <b><h7><u>Installing Aerospike</u></h7></b>
 
 Install Docker for Mac in your local if you have mac system and Docker toolbox if you have windows laptop.
@@ -28,8 +26,3 @@ This project depends on aerospike-demo and benchmarks the CRUD operations on aer
 
 Run this project using the command `gradle :aerospike-benchmark-demo:jmh --stacktrace` 
 
-
-
-<b>Steps to run the tests - </b>
-
-Run gradle jmh command to run the benchmarking.

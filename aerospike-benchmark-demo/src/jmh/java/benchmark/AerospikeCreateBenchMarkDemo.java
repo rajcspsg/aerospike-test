@@ -28,7 +28,7 @@ public class AerospikeCreateBenchMarkDemo {
 
         Random rand = new Random();
 
-        @Setup(Level.Invocation)
+        @Setup(Level.Iteration)
         public void setUp() {
             ApplicationContext ctx = new AnnotationConfigApplicationContext(AerospikeConfig.class);
             repository = ctx.getBean(UserRepository.class);
