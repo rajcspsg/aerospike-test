@@ -14,7 +14,7 @@ public class AerospikeDemo {
 
         //AerospikeClient client = new AerospikeClient("172.28.128.3", 3000);
         AerospikeClient client = new AerospikeClient("localhost", 3000);
-        Key key = new Key("test", "demo", "putgetkey");
+        Key key = new Key("test", "User", "putgetkey");
         //Key key2 = new Key("1", "2", "3");
         Bin bin1 = new Bin("bin1", 1);
         Bin bin2 = new Bin("bin2", new User("", new HashMap<>()));
@@ -28,6 +28,7 @@ public class AerospikeDemo {
 
         System.out.println("record is "+ record);
         System.out.println("record bins is " + record.bins);
+
 
         client.close();
     }
